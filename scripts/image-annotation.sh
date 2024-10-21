@@ -1,22 +1,8 @@
 #!/bin/bash
-az acr login -n msopenjdk
-
-if [[ $? -ne 0 ]]; then
-    echo "Failed to login to ACR"
-    exit 1
-fi
-
-echo "Pulling... $REGISTRY"
-
-docker pull "$REGISTRY"
-if [[ $? -ne 0 ]]; then
-    echo "Failed to pull image $REGISTRY"
-    exit 1
-fi
-
-manifest=$(docker image inspect "$REGISTRY" | jq)
-digest=$(echo $manifest | jq '.[0].RepoDigests[0]')
+echo "Fetching image digest"
+digest=$(az acr repository show --name msopenjdk --image $IMAGE --query digest)
 digest=${digest//\"/}
+echo "Digest: $digest"
 endOfLifeDate=$(date "+%Y-%m-%d")
 
 echo "Annotating image $digest with end-of-life date $endOfLifeDate"

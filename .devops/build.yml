@@ -162,7 +162,7 @@ extends:
                   scriptPath: $(Build.SourcesDirectory)/scripts/image-annotation.sh
                 env:
                   ACR_NAME: msopenjdk
-                  REGISTRY: msopenjdk.azurecr.io/internal/private/openjdk/jdk:$(version)-$(distro)
+                  IMAGE: internal/private/openjdk/jdk:$(version)-$(distro)
               - task: AzureCLI@2
                 inputs:
                   azureSubscription: "JEG-Infrastructure"
@@ -229,7 +229,7 @@ extends:
                   scriptPath: $(Build.SourcesDirectory)/scripts/image-annotation.sh
                 env:
                   ACR_NAME: msopenjdk
-                  REGISTRY: msopenjdk.azurecr.io/public/openjdk/jdk:$(version)-$(distro)
+                  IMAGE: public/openjdk/jdk:$(version)-$(distro)
 
               - task: AzureCLI@2
                 inputs:
